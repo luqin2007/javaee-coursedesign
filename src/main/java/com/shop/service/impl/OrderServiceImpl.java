@@ -3,10 +3,12 @@ package com.shop.service.impl;
 import com.shop.entity.Order;
 import com.shop.entity.OrderItem;
 import com.shop.entity.Cart;
+import com.shop.entity.User;
 import com.shop.mapper.OrderMapper;
 import com.shop.mapper.OrderItemMapper;
 import com.shop.service.OrderService;
 import com.shop.service.CartService;
+import com.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,9 @@ public class OrderServiceImpl implements OrderService {
     
     @Autowired
     private CartService cartService;
+    
+    @Autowired
+    private UserService userService;
     
     @Override
     public List<Order> findByUserId(Integer userId) {
@@ -76,8 +81,13 @@ public class OrderServiceImpl implements OrderService {
             return null;
         }
         
+        // 获取用户信息作为收货地址
+        User user = userService.findById(userId);
+        String shippingAddress = (user != null && user.getAddress() != null) ? 
+            user.getAddress() : "默认收货地址";
+        
         // 创建订单
-        Order order = new Order(userId, totalAmount);
+        Order order = new Order(userId, totalAmount, shippingAddress);
         Integer result = orderMapper.insert(order);
         
         if (result > 0 && order.getId() != null) {

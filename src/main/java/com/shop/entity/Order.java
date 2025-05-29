@@ -12,6 +12,7 @@ public class Order {
     private Integer userId;
     private BigDecimal totalAmount;
     private Integer status; // 0-待支付，1-已支付，2-已发货，3-已完成
+    private String shippingAddress; // 收货地址
     private Date createTime;
     
     // 关联属性
@@ -23,6 +24,14 @@ public class Order {
     public Order(Integer userId, BigDecimal totalAmount) {
         this.userId = userId;
         this.totalAmount = totalAmount;
+        this.status = 0;
+        this.createTime = new Date();
+    }
+    
+    public Order(Integer userId, BigDecimal totalAmount, String shippingAddress) {
+        this.userId = userId;
+        this.totalAmount = totalAmount;
+        this.shippingAddress = shippingAddress;
         this.status = 0;
         this.createTime = new Date();
     }
@@ -66,6 +75,14 @@ public class Order {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 
     public User getUser() {

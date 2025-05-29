@@ -10,6 +10,7 @@
         <result property="userId" column="user_id"/>
         <result property="totalAmount" column="total_amount"/>
         <result property="status" column="status"/>
+        <result property="shippingAddress" column="shipping_address"/>
         <result property="createTime" column="create_time"/>
         
         <!-- 关联用户信息 -->
@@ -103,8 +104,8 @@
 
     <!-- 插入订单 -->
     <insert id="insert" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO orders (user_id, total_amount, status, create_time)
-        VALUES (#{userId}, #{totalAmount}, #{status}, #{createTime})
+        INSERT INTO orders (user_id, total_amount, status, shipping_address, create_time)
+        VALUES (#{userId}, #{totalAmount}, #{status}, #{shippingAddress}, #{createTime})
     </insert>
 
     <!-- 更新订单 -->
