@@ -16,11 +16,6 @@
             description LIKE CONCAT('%', #{keyword}, '%')
         )
         ORDER BY
-            CASE
-                WHEN name LIKE CONCAT(#{keyword}, '%') THEN 1
-                WHEN name LIKE CONCAT('%', #{keyword}, '%') THEN 2
-                ELSE 3
-            END,
         <choose>
             <when test="sort == 'price_asc'">
                 price ASC
@@ -31,11 +26,11 @@
             <when test="sort == 'sales_desc'">
                 sales DESC
             </when>
-            <when test="sort == 'id_desc'">
-                id DESC
+            <when test="sort == 'create_time_desc'">
+                create_time DESC
             </when>
             <otherwise>
-                sales DESC, id DESC
+                id DESC
             </otherwise>
         </choose>
     </select>
